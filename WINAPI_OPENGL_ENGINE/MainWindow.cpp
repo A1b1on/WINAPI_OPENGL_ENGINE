@@ -15,7 +15,6 @@ int alb::MainWindow::Register_Window_CLass() {
 	this->window_class.lpszClassName = this->CLASS_NAME;
 	this->window_class.hInstance = this->app_handle;
 	this->window_class.lpfnWndProc = alb::WindowProc;
-
 	if (!RegisterClass(&this->window_class)) {
 		alb::Tech::Show_Err_Message("Window class ERR", "Window class could register");
 		alb::Tech::Show_last_Err();
@@ -65,13 +64,13 @@ int alb::MainWindow::Create_window(){
 			PFD_SUPPORT_OPENGL |            // Format Must Support OpenGL
 			PFD_DOUBLEBUFFER,              // Must Support Double Buffering
 			PFD_TYPE_RGBA,                // Request An RGBA Format
-			16,                          // Select Our Color Depth
+			24,                          // Select Our Color Depth
 			0, 0, 0, 0, 0, 0,           // Color Bits Ignored
 			0,                         // No Alpha Buffer
 			0,                        // Shift Bit Ignored
 			0,                       // No Accumulation Buffer
 			0, 0, 0, 0,             // Accumulation Bits Ignored
-			16,                    // 16Bit Z-Buffer (Depth Buffer)
+			32,                    // 16Bit Z-Buffer (Depth Buffer)
 			0,                    // No Stencil Buffer
 			0,                   // No Auxiliary Buffer
 			PFD_MAIN_PLANE,     // Main Drawing Layer
@@ -96,6 +95,7 @@ int alb::MainWindow::Create_window(){
 			alb::Tech::Show_last_Err();
 			return 0;
 		}
+		this->render_context = wglCreateContext(this->device_context);
 		if (!wglMakeCurrent(this->device_context, this->render_context)) {
 			this->Destroy_window();
 			alb::Tech::Show_Err_Message("GL Render context ERR", "Cant activate the gl rendering context");
@@ -179,13 +179,23 @@ void alb::MainWindow::Resize_GL_scene(size_t w, size_t h) {
 	glViewport(0, 0, w, h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	//gluPerspective(45.0f, (GLfloat)w / (GLfloat)h, 0.1f, 100.0f);
+	gluPerspective(45.0f, (GLfloat)w / (GLfloat)h, 0.1f, 100.0f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
 void alb::MainWindow::Draw_GL_scene() {
+	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
+
+	glBegin(GL_TRIANGLES);
+	glColor3f(1, 0, 0);
+	glVertex2f(-0.5f, -0.5f);
+	glColor3f(0, 1, 0);
+	glVertex2f(0.0f, 0.5f);
+	glColor3f(0, 0, 1);
+	glVertex2f(0.5f, -0.5f);
+	glEnd();
+
 }
 
 LRESULT CALLBACK alb::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -205,8 +215,8 @@ LRESULT CALLBACK alb::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 		{
 			switch (wParam)           // Check System Calls
 			{
-			case SC_SCREENSAVE:     // Screensaver Trying To Start?
-			case SC_MONITORPOWER:  // Monitor Trying To Enter Powersave?
+				case SC_SCREENSAVE:     // Screensaver Trying To Start?
+				case SC_MONITORPOWER:  // Monitor Trying To Enter Powersave?
 				return 0;         // Prevent From Happening
 			}
 			break;               // Exit

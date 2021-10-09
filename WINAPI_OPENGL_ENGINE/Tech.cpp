@@ -4,6 +4,7 @@
 
 #include <GL/GL.h>
 
+
 int alb::Tech::Show_Err_Message(const char* title, const char* message) {
 	return MessageBox(NULL, alb::Tech::ConvertChar(message), alb::Tech::ConvertChar(title), MB_OK | MB_ICONERROR);
 }
@@ -39,7 +40,7 @@ size_t alb::Tech::Const_char_size(const char* str) {
 
 int alb::Tech::InitGL() {
 	glShadeModel(GL_SMOOTH);
-	glClearColor(0.4f, 0.1f, 0.5f, 0.0f);
+	glClearColor(0.4f, 0.1f, 0.5f, 1.0f);
 	glClearDepth(1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);

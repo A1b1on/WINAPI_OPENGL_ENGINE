@@ -8,6 +8,7 @@
 #include <string>
 #include <GL/GL.h>
 #include <GL/GLU.h>
+#include <gl/glut.h>
 
 namespace alb {
 	class MainWindow
