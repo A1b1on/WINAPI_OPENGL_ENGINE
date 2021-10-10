@@ -143,12 +143,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AbstractWindow.cpp" />
     <ClCompile Include="Entry.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="Tech.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AbstractWindow.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="Tech.h" />
