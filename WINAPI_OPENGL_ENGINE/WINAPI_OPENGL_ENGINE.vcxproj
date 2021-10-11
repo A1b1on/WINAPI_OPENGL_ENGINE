@@ -147,12 +147,14 @@
     <ClCompile Include="Entry.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="OpenGL_window.cpp" />
     <ClCompile Include="Tech.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractWindow.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="MainWindow.h" />
+    <ClInclude Include="OpenGL_window.h" />
     <ClInclude Include="Tech.h" />
   </ItemGroup>
   <ItemGroup>

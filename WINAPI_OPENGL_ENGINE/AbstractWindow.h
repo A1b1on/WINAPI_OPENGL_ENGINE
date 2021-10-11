@@ -5,25 +5,6 @@
 #include <string>
 
 namespace alb {
-	/*LRESULT CALLBACK AbstractWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-		switch (uMsg)
-		{
-		case WM_DESTROY:
-			PostQuitMessage(0);
-			return 0;
-
-		case WM_PAINT:
-		{
-			PAINTSTRUCT ps;
-			HDC hdc = BeginPaint(hwnd, &ps);
-			FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
-			EndPaint(hwnd, &ps);
-		}
-		return 0;
-
-		}
-		return DefWindowProc(hwnd, uMsg, wParam, lParam);
-	}*/
 	class AbstractWindow
 	{
 	public:
@@ -47,8 +28,8 @@ namespace alb {
 		std::string title = "Abstract window";
 		std::uint16_t width = 1;
 		std::uint16_t height = 1;
-
-		//LRESULT(*window_procedure) (HWND, UINT, WPARAM, LPARAM) = AbstractWindowProc;
+		std::uint16_t pos_x = CW_DEFAULT;
+		std::uint16_t pos_y = CW_DEFAULT;
 	};
 }
 

@@ -2,7 +2,14 @@
 
 std::uint8_t alb::MainWindow::Create_window() {
 	this->Change_window_class(0, alb::WindowProc, L"Main window class");
-	this->Create_abstract_window();
+    //Создаем стиль окна из Перекрытия/системного меню/надписи/рамки/свернутьразвернуть/расширить
+    DWORD dwStyle = WS_OVERLAPPED | WS_SYSMENU | WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_MAXIMIZE;
+    this->Create_abstract_window(0, dwStyle, CW_DEFAULT, CW_DEFAULT, NULL, NULL);
+    //Прямоугольник с которого замерем размеры
+    RECT sizes;
+    GetWindowRect(this->window_handle, &sizes);
+    this->width = sizes.right;
+    this->height = sizes.bottom;
 
 	return 1;
 }
@@ -22,18 +29,19 @@ LRESULT CALLBACK alb::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 {
     switch (uMsg)
     {
-    case WM_DESTROY:
-        PostQuitMessage(0);
-        return 0;
+        case WM_DESTROY:
+            PostQuitMessage(0);
+            return 0;
 
-    case WM_PAINT:
-    {
-        PAINTSTRUCT ps;
-        HDC hdc = BeginPaint(hwnd, &ps);
-        FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
-        EndPaint(hwnd, &ps);
-    }
-    return 0;
+        case WM_PAINT:
+        {
+            //Красим фон
+            PAINTSTRUCT ps;
+            HDC hdc = BeginPaint(hwnd, &ps);
+            FillRect(hdc, &ps.rcPaint, (HBRUSH)CreateSolidBrush(RGB(114, 116, 122)));
+            EndPaint(hwnd, &ps);
+        }
+        return 0;
     }
     return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }

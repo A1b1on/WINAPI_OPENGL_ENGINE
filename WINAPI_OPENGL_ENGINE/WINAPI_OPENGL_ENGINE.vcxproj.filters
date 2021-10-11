@@ -34,6 +34,9 @@
       <Filter>Исходные файлы\WindSys</Filter>
     </ClCompile>
     <ClCompile Include="AbstractWindow.cpp">
+      <Filter>Исходные файлы\WindSys</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL_window.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -48,6 +51,9 @@
       <Filter>Файлы заголовков\WindSys</Filter>
     </ClInclude>
     <ClInclude Include="AbstractWindow.h">
+      <Filter>Файлы заголовков\WindSys</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL_window.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
