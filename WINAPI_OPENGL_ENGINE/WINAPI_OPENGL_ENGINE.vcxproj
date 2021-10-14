@@ -154,11 +154,16 @@
     <ClInclude Include="AbstractWindow.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="MainWindow.h" />
+    <ClInclude Include="menu.h" />
     <ClInclude Include="OpenGL_window.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Tech.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Menu.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

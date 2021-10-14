@@ -5,21 +5,25 @@
 #include <GL/GLU.h>
 
 namespace alb {
-	class OpenGL_window : private AbstractWindow
+	class OpenGL_window : public AbstractWindow
 	{
 	public:
 		OpenGL_window() {}
 		OpenGL_window(HINSTANCE hInstance, HWND parent_window, std::uint16_t w, std::uint16_t h, std::uint16_t x, std::uint16_t y) :
 			AbstractWindow(hInstance, parent_window, "opengl window", w, h) {
-			this->pos_x = x; this->pos_y = y;
+			this->Change_coo(x, y);
 		}
 
-		std::uint8_t Create_GL_window();
-		std::uint8_t Destroy_GL_window();
+		BOOL Create_GL_window();
+		BOOL Destroy_GL_window();
+
+		//BOOL Change_window_class(const WNDCLASS&) override;
 	private:
 		HGLRC	render_context = NULL;
 		HDC		device_context = NULL;
 	};
 	void ResizeGLScene(std::uint16_t w, std::uint16_t h);
+	LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+
 }
 

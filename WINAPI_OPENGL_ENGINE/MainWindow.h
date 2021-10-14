@@ -5,6 +5,7 @@
 #endif
 
 #include "AbstractWindow.h"
+#include "OpenGL_window.h"
 
 #include <Windows.h>
 #include <string>
@@ -14,22 +15,20 @@
 #include <gl/glut.h>
 
 namespace alb {
-	class MainWindow : private AbstractWindow
+	class MainWindow : public AbstractWindow
 	{
 	public:
-		MainWindow() {}
+		MainWindow() { }
 		MainWindow(HINSTANCE hInstance, std::string title, std::uint16_t w, std::uint16_t h):AbstractWindow(hInstance, NULL, title, w, h) {}
-		
-		std::uint8_t Create_window();
-		std::uint8_t Start_main_loop();
+		~MainWindow();
+		BOOL Create_window();
+		BOOL Start_main_loop();
 
-
-		std::string Title();
-		std::uint16_t Width();
-		std::uint16_t Height();
 	private:
+		OpenGL_window* scene = nullptr;
 	};
 
 	LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+	LRESULT CALLBACK OpenGLWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 }
 

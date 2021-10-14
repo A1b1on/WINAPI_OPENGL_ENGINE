@@ -1,25 +1,13 @@
 #include "AbstractWindow.h"
 #include "Tech.h"
 
-std::uint8_t alb::AbstractWindow::Change_window_class(const WNDCLASS& wnd) {
-	this->window_class.style = wnd.style;
-	this->window_class.lpfnWndProc = wnd.lpfnWndProc;
-	this->window_class.cbClsExtra = wnd.cbClsExtra;
-	this->window_class.cbWndExtra = wnd.cbWndExtra;
-	this->window_class.hInstance = wnd.hInstance;
-	this->window_class.hIcon = wnd.hIcon;
-	this->window_class.hbrBackground = wnd.hbrBackground;
-	this->window_class.lpszMenuName = wnd.lpszMenuName;
-	this->window_class.lpszClassName = wnd.lpszClassName;
+BOOL alb::AbstractWindow::Change_window_class(const WNDCLASS& wnd) {
+	this->window_class = wnd;
+	this->WndProc = wnd.lpfnWndProc;
+	this->class_name = wnd.lpszClassName;
 	return 1;
 }
-std::uint8_t alb::AbstractWindow::Change_window_class(UINT style, WNDPROC proc, LPCTSTR class_name) {
-	this->window_class.lpszClassName = class_name;
-	this->window_class.style = style;
-	this->window_class.lpfnWndProc = proc;
-	return 1;
-}
-std::uint8_t alb::AbstractWindow::Register_window_class() {
+BOOL alb::AbstractWindow::Register_window_class() {
 	if (!RegisterClass(&this->window_class)) {
 		alb::Tech::Show_Err_Message("Window class ERR", "Window class could register");
 		alb::Tech::Show_last_Err();
@@ -28,7 +16,7 @@ std::uint8_t alb::AbstractWindow::Register_window_class() {
 	return 1;
 }
 
-std::uint8_t alb::AbstractWindow::Destroy_abstract_window() {
+BOOL alb::AbstractWindow::Destroy_abstract_window() {
 	if (this->window_handle && !DestroyWindow(this->window_handle)) {
 		alb::Tech::Show_Err_Message("Shutdown ERR", "Release of HWND failed");
 		this->window_handle = NULL;
@@ -38,7 +26,7 @@ std::uint8_t alb::AbstractWindow::Destroy_abstract_window() {
 	}
 	return 1;
 }
-std::uint8_t alb::AbstractWindow::Create_abstract_window(DWORD dwExStyle, DWORD dwStyle, std::uint16_t x, std::uint16_t y, HMENU hMenu, LPVOID lpParam) {
+BOOL alb::AbstractWindow::Create_abstract_window(DWORD dwExStyle, DWORD dwStyle, HMENU hMenu, LPVOID lpParam) {
 	if (!this->Register_window_class()) {
 		alb::Tech::Show_Err_Message("Register window err", "Couldntt register window class");
 		alb::Tech::Show_last_Err();
@@ -47,10 +35,10 @@ std::uint8_t alb::AbstractWindow::Create_abstract_window(DWORD dwExStyle, DWORD 
 	this->window_handle = CreateWindowEx(
 		dwExStyle,												  // Optional window styles.
 		this->window_class.lpszClassName,                // Window class
-		alb::Tech::ConvertChar(this->title.c_str()),    // Window text
+		alb::Tech::ConvertChar(this->window_title.c_str()),    // Window text
 		dwStyle,											   // Window style
 		// Size and position
-		x, y,
+		this->pos_x, this->pos_y,
 		this->width, this->height,
 		this->parent_window, // Parent window    
 		hMenu,				// Menu
@@ -67,3 +55,23 @@ std::uint8_t alb::AbstractWindow::Create_abstract_window(DWORD dwExStyle, DWORD 
 	return 1;
 }
 
+UINT alb::AbstractWindow::Width() { return this->width; }
+UINT alb::AbstractWindow::Height() { return this->height; }
+BOOL alb::AbstractWindow::Change_size(UINT w, UINT h) {
+	if (w && h) {
+		this->width = w;
+		this->height = h;
+		return TRUE;
+	}
+	return FALSE;
+}
+UINT alb::AbstractWindow::X_coo() { return pos_x; }
+UINT alb::AbstractWindow::Y_coo() { return pos_y; }
+BOOL alb::AbstractWindow::Change_coo(UINT x, UINT y) {
+	this->pos_x = x;
+	this->pos_y = y;
+	return TRUE;
+}
+HWND alb::AbstractWindow::Parent_handle() { return this->parent_window; }
+HWND alb::AbstractWindow::Window_handle() { return this->window_handle; }
+HINSTANCE alb::AbstractWindow::Application_handle() { return this->app_handle; }

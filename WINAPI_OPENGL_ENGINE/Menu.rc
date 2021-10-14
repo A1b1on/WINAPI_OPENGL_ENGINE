@@ -1,0 +1,16 @@
+#include "menu.h"
+MAINMENU MENU DISCARDABLE{
+	POPUP "System" {
+		MENUITEM "Open project", PROJ_OPEN
+		MENUITEM "Save project", PROJ_SAVE
+	}
+	POPUP "Settings" {
+		MENUITEM "All",	SETT_ALL
+		MENUITEM "Render", SETT_RENDER
+
+	}
+	POPUP "Another" {
+		MENUITEM "Author", ALB_AUTHOR
+		MENUITEM "About", ALB_ABOUT
+	}
+}
