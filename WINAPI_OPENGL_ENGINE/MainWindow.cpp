@@ -46,16 +46,39 @@ BOOL alb::MainWindow::Create_window() {
     return 1;
 }
 BOOL alb::MainWindow::Start_main_loop() {
-	while (GetMessage(&this->msg, NULL, 0, 0)) {
+    BOOL done = FALSE;
+    while (!done) {
+        if (PeekMessage(&this->msg, NULL, 0, 0, PM_REMOVE)) {
+            if (msg.message == WM_QUIT) {
+                done = TRUE;
+            } else {
+                TranslateMessage(&this->msg);
+                DispatchMessage(&this->msg);
+                DispatchMessage(&this->scene->msg);
+                if (alb::InputSystem::resize_event) {
+                    this->Change_size(alb::InputSystem::NewWidth(), alb::InputSystem::NewHeight());
+                    SetWindowPos(this->scene->Window_handle(), HWND_TOP, this->Height() / 5, 0, this->Width() / 5 * 3, this->Height() / 5 * 4, SWP_SHOWWINDOW);
+                    alb::InputSystem::resize_event = false;
+                }
+
+            }
+        } else {
+            if (alb::InputSystem::Is_active()) {
+                if (alb::InputSystem::Key(VK_ESCAPE)) {
+                    done = TRUE;
+                } else {
+                    alb::DrawScene();
+                    SwapBuffers(this->scene->Device_context());
+                }
+            }
+        }
+    }
+	/*while (GetMessage(&this->msg, NULL, 0, 0)) {
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 
-        if (alb::InputSystem::resize_event) {
-            this->Change_size(alb::InputSystem::NewWidth(), alb::InputSystem::NewHeight());
-            SetWindowPos(this->scene->Window_handle(), HWND_TOP, this->Height() / 5, 0, this->Width() / 5 * 3, this->Height() / 5 * 4, SWP_SHOWWINDOW);
-            alb::InputSystem::resize_event = false;
-        }
-	}
+       
+	}*/
 	return 1;
 }
 
@@ -63,8 +86,20 @@ LRESULT CALLBACK alb::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 {
     switch (uMsg)
     {
+        case WM_ACTIVATE:
+            if (!HIWORD(wParam))
+                alb::InputSystem::Activate();
+            else
+                alb::InputSystem::DisActivate();
+            return 0;
         case WM_SIZE:
             alb::InputSystem::SetNewSize(LOWORD(lParam), HIWORD(lParam));
+            return 0;
+        case WM_KEYDOWN:
+            alb::InputSystem::SetKey(wParam, TRUE);
+            return 0;
+        case WM_KEYUP:
+            alb::InputSystem::SetKey(wParam, FALSE);
             return 0;
         case WM_DESTROY:
             PostQuitMessage(0);
@@ -77,7 +112,9 @@ LRESULT CALLBACK alb::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 LRESULT CALLBACK alb::OpenGLWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     switch (uMsg)
     {
-        
+        case WM_SIZE:
+            alb::ResizeGLScene(LOWORD(lParam), HIWORD(lParam));
+            return 0;
         case WM_DESTROY:
             PostQuitMessage(0);
             return 0;

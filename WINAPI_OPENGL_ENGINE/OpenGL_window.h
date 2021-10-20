@@ -16,14 +16,13 @@ namespace alb {
 
 		BOOL Create_GL_window();
 		BOOL Destroy_GL_window();
-
+		HDC	 Device_context();
 		//BOOL Change_window_class(const WNDCLASS&) override;
 	private:
 		HGLRC	render_context = NULL;
 		HDC		device_context = NULL;
 	};
 	void ResizeGLScene(std::uint16_t w, std::uint16_t h);
-	LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
+	GLint DrawScene();
 }
 
