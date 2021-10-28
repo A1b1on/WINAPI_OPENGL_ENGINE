@@ -6,6 +6,7 @@
 
 #include "AbstractWindow.h"
 #include "OpenGL_window.h"
+#include "ExplorerWindow.h"
 
 #include <Windows.h>
 #include <string>
@@ -26,9 +27,11 @@ namespace alb {
 
 	private:
 		OpenGL_window* scene = nullptr;
+		ExplorerWindow* explorer = nullptr;
 	};
 
-	LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-	LRESULT CALLBACK OpenGLWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+	LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
+	LRESULT CALLBACK OpenGLWindowProc(HWND, UINT, WPARAM, LPARAM);
+	LRESULT CALLBACK ExplorerProc(HWND, UINT, WPARAM, LPARAM);
 }
 

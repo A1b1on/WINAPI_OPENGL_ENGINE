@@ -143,15 +143,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AbstractLabel.cpp" />
     <ClCompile Include="AbstractWindow.cpp" />
     <ClCompile Include="Entry.cpp" />
+    <ClCompile Include="ExplorerElement.cpp" />
+    <ClCompile Include="ExplorerWindow.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="OpenGL_window.cpp" />
     <ClCompile Include="Tech.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AbstractLabel.h" />
     <ClInclude Include="AbstractWindow.h" />
+    <ClInclude Include="ExplorerElement.h" />
+    <ClInclude Include="ExplorerWindow.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="menu.h" />
@@ -164,6 +170,9 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Menu.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="DisDoc.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

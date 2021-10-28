@@ -5,6 +5,7 @@
 #endif
 
 #include <Windows.h>
+#include <string>
 
 namespace alb {
 	class Tech {
@@ -16,6 +17,8 @@ namespace alb {
 		static int Show_last_Err();
 
 		static LPCWSTR ConvertChar(const char* str);
+		static std::string Convert_WSTR_to_STR(const std::wstring& str);
+		static std::wstring Get_current_directory();
 
 		static int InitGL();
 	};

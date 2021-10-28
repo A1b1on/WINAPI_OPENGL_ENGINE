@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "InputSystem.h"
 
+
 alb::MainWindow::~MainWindow() {
     delete scene;
 }
@@ -43,6 +44,26 @@ BOOL alb::MainWindow::Create_window() {
             NULL,
             L"Opengl window"});
     this->scene->Create_GL_window();
+    //Создаем окно обозревателя
+    this->explorer = new alb::ExplorerWindow(
+        this->Application_handle(),
+        this->Window_handle(),
+        this->Width() / 5 * 4,
+        this->Height() / 5,
+        0,
+        this->Height()/5 * 4);
+    this->explorer->Change_window_class(
+        WNDCLASS{
+            0,
+            alb::ExplorerProc,
+            0, 0,
+            this->Application_handle(),
+            0, 0,
+            (HBRUSH)CreateSolidBrush(RGB(134, 136, 142)),
+            NULL,
+            L"Explorer window"
+        } );
+    this->explorer->Create_Explorer();
     return 1;
 }
 BOOL alb::MainWindow::Start_main_loop() {
@@ -57,7 +78,13 @@ BOOL alb::MainWindow::Start_main_loop() {
                 DispatchMessage(&this->scene->msg);
                 if (alb::InputSystem::resize_event) {
                     this->Change_size(alb::InputSystem::NewWidth(), alb::InputSystem::NewHeight());
+                    //opengl
                     SetWindowPos(this->scene->Window_handle(), HWND_TOP, this->Height() / 5, 0, this->Width() / 5 * 3, this->Height() / 5 * 4, SWP_SHOWWINDOW);
+                    //explorer
+                    this->explorer->Change_size(this->Width() / 5 * 4, this->Height() / 5);
+                    this->explorer->Change_coo(0, this->Height() / 5 * 4);
+                    SetWindowPos(this->explorer->Window_handle(), HWND_TOP, 0, this->Height()/5*4, this->explorer->Width() , this->explorer->Height(), SWP_SHOWWINDOW);
+                    
                     alb::InputSystem::resize_event = false;
                 }
 
@@ -120,6 +147,20 @@ LRESULT CALLBACK alb::OpenGLWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPAR
             return 0;
         default:
             return DefWindowProc(hwnd, uMsg, wParam, lParam);
+    }
+    return 0;
+}
+LRESULT CALLBACK alb::ExplorerProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    switch (uMsg)
+    {
+    case WM_DESTROY:
+        PostQuitMessage(0);
+        return 0;
+    case WM_SIZE:
+        
+        return 0;
+    default:
+        return DefWindowProc(hwnd, uMsg, wParam, lParam);
     }
     return 0;
 }

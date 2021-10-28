@@ -1,8 +1,9 @@
 #include "Tech.h"
-#include <string>
 #include <sstream>
-
 #include <GL/GL.h>
+#include <codecvt>
+
+#define MAX_PATH 100
 
 
 int alb::Tech::Show_Err_Message(const char* title, const char* message) {
@@ -46,4 +47,18 @@ int alb::Tech::InitGL() {
 	glDepthFunc(GL_LEQUAL);
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	return 1;
+}
+
+std::wstring alb::Tech::Get_current_directory() {
+	TCHAR buffer[MAX_PATH] = { 0 };
+	GetModuleFileName(NULL, buffer, MAX_PATH);
+	std::wstring::size_type pos = std::wstring(buffer).find_last_of(L"\\/");
+	return std::wstring(buffer).substr(0, pos);
+}
+
+std::string alb::Tech::Convert_WSTR_to_STR(const std::wstring& str) {
+	using convert_typeX = std::codecvt_utf8<wchar_t>;
+	std::wstring_convert<convert_typeX, wchar_t> converterX;
+
+	return converterX.to_bytes(str);
 }

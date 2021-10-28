@@ -19,6 +19,12 @@
     <Filter Include="Исходные файлы\WindSys">
       <UniqueIdentifier>{1b2ed41d-20e9-4fa8-8c55-6fa2bbb7861f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\WindSys\Elements">
+      <UniqueIdentifier>{f1bf314a-be91-4315-b355-e759aa6a77d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\WindSys\Elements">
+      <UniqueIdentifier>{1f46b914-3f9d-4d6f-a6f7-ec127871e56b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Entry.cpp">
@@ -38,6 +44,15 @@
     </ClCompile>
     <ClCompile Include="OpenGL_window.cpp">
       <Filter>Исходные файлы\WindSys</Filter>
+    </ClCompile>
+    <ClCompile Include="ExplorerWindow.cpp">
+      <Filter>Исходные файлы\WindSys</Filter>
+    </ClCompile>
+    <ClCompile Include="ExplorerElement.cpp">
+      <Filter>Исходные файлы\WindSys\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="AbstractLabel.cpp">
+      <Filter>Исходные файлы\WindSys\Elements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -62,6 +77,15 @@
     <ClInclude Include="OpenGL_window.h">
       <Filter>Файлы заголовков\WindSys</Filter>
     </ClInclude>
+    <ClInclude Include="ExplorerWindow.h">
+      <Filter>Файлы заголовков\WindSys</Filter>
+    </ClInclude>
+    <ClInclude Include="ExplorerElement.h">
+      <Filter>Файлы заголовков\WindSys\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractLabel.h">
+      <Filter>Файлы заголовков\WindSys\Elements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -70,5 +94,10 @@
     <ResourceCompile Include="Menu.rc">
       <Filter>Файлы ресурсов</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="DisDoc.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
   </ItemGroup>
 </Project>

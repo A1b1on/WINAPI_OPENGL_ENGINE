@@ -17,7 +17,7 @@ namespace alb {
 		UINT Height();
 		UINT X_coo();
 		UINT Y_coo();
-		BOOL Change_size(UINT w, UINT h);
+		virtual BOOL Change_size(UINT w, UINT h);
 		BOOL Change_coo(UINT x, UINT y);
 		
 		HWND Parent_handle();
